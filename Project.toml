@@ -1,0 +1,7 @@
+name = "StructuredPrinting"
+uuid = "98e085c8-1edc-4d9d-bf3b-8d7a8502c19d"
+authors = ["Charles Kawczynski <kawczynski.charles@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Crayons = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
