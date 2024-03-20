@@ -104,7 +104,9 @@ function _structured_print(io, obj, pc; o::Options, name, counter=0)
                 suffix = o.print_types ? "::$(typeof(prop))" : ""
                 println(io, "$pc_string$suffix")
             end
-            _structured_print(io, prop, pc_full; o, name, counter=counter+1)
+            if !any(map(x->prop isa x, o.recursion_types))
+                _structured_print(io, prop, pc_full; o, name, counter=counter+1)
+            end
             counter > o.recursion_depth && return
         end
     end
