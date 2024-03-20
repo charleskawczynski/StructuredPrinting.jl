@@ -86,9 +86,7 @@ Options(type::Type; kwargs...) = Options((type, ); kwargs...)
 Options() = Options(();)
 
 function _structured_print(io, obj, pc; o::Options, name, counter=0)
-    if counter > o.recursion_depth
-        return
-    end
+    counter > o.recursion_depth && return
     for pn in propertynames(obj)
         prop = getproperty(obj, pn)
         pc_full = (pc..., ".", pn)
@@ -99,6 +97,7 @@ function _structured_print(io, obj, pc; o::Options, name, counter=0)
             println(io, "$pc_colored$suffix")
             if !any(map(x->prop isa x, o.recursion_types))
                 _structured_print(io, prop, pc_full; o, name, counter=counter+1)
+                counter > o.recursion_depth && return
             end
         else
             if !o.match_only
@@ -106,6 +105,7 @@ function _structured_print(io, obj, pc; o::Options, name, counter=0)
                 println(io, "$pc_string$suffix")
             end
             _structured_print(io, prop, pc_full; o, name, counter=counter+1)
+            counter > o.recursion_depth && return
         end
     end
 end
