@@ -28,24 +28,28 @@ end
 
 @testset "StructuredPrinting with types" begin
     # Print struct with type
-    @structured_print t Options(typeof(t.branchB))
+    @structured_print t Options(x-> x isa typeof(t.branchB))
     # Print struct with Tuple of types
     types = (typeof(t.branchB), typeof(t.branchA))
-    @structured_print t Options(types)
+    @structured_print t Options(x->any(y->x isa y, types))
 end
 
 @testset "StructuredPrinting with types and matching" begin
     # Print struct with type
-    @structured_print t Options(typeof(t.branchB); match_only=true)
+    print_obj = x->x isa typeof(t.branchB)
+    @structured_print t Options(;print_obj, highlight = print_obj)
     # Print struct with Tuple of types
     types = (typeof(t.branchB), typeof(t.branchA))
-    @structured_print t Options(types; match_only=true)
+    print_obj = x -> any(y-> x isa y, types)
+    @structured_print t Options(;print_obj, highlight = print_obj)
 end
 
 @testset "StructuredPrinting with types and matching" begin
     # Print struct with type
-    @structured_print t Options(typeof(t.branchB); match_only=true, print_types = true)
+    print_obj = x->x isa typeof(t.branchB)
+    @structured_print t Options(;print_obj, highlight = print_obj, print_type = Returns(true))
     # Print struct with Tuple of types
     types = (typeof(t.branchB), typeof(t.branchA))
-    @structured_print t Options(types; match_only=true, print_types = true)
+    print_obj = x -> any(y-> x isa y, types)
+    @structured_print t Options(; print_obj, print_type = Returns(true))
 end
