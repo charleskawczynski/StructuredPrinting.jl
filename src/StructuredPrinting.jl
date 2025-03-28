@@ -102,8 +102,7 @@ function _structured_print(io, obj, pc; o::Options, name, counter=0)
         suffix = o.print_type(prop) ? "::$(type_string(io, prop; maxdepth=o.max_type_depth))" : ""
         pc_string = name*string(join(pc_full))
         pc_colored = o.highlight(prop) ? Crayons.Box.RED_FG(pc_string) : pc_string
-        o.print_obj(prop) || continue
-        println(io, "$pc_colored$suffix")
+        o.print_obj(prop) && println(io, "$pc_colored$suffix")
         _structured_print(io, prop, pc_full; o, name, counter=counter+1)
     end
 end
