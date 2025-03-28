@@ -53,3 +53,13 @@ end
     print_obj = x -> any(y-> x isa y, types)
     @structured_print t Options(; print_obj, print_type = Returns(true))
 end
+
+@testset "StructuredPrinting with recursive objects" begin
+    BC = Base.Broadcast.broadcasted
+    a = [1]
+    b = [1]
+    c = [1]
+    bc = BC(+, a, BC(*, b, BC(-, a, c)))
+    print_obj = x -> x === a
+    @structured_print bc Options(;print_obj, print_type = Returns(true))
+end
