@@ -63,3 +63,13 @@ end
     print_obj = x -> x === a
     @structured_print bc Options(;print_obj, print_type = Returns(true))
 end
+
+@testset "StructuredPrinting with custom message" begin
+    BC = Base.Broadcast.broadcasted
+    a = [1]
+    b = [1]
+    c = [1]
+    bc = BC(+, a, BC(*, b, BC(-, a, c)))
+    custom = x -> x === a ? "<--- This is a!" : ""
+    @structured_print bc Options(;custom, print_type = Returns(true))
+end
