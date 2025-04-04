@@ -1,6 +1,6 @@
 name = "StructuredPrinting"
 uuid = "98e085c8-1edc-4d9d-bf3b-8d7a8502c19d"
-authors = ["Charles Kawczynski <kawczynski.charles@gmail.com>"]
+authors = ["CliMA Contributors <clima-software@caltech.edu>"]
 version = "0.2.2"
 
 [deps]
